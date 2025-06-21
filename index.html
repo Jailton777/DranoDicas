@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>DragonAnimes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary: #FD1C03;
+            --secondary: #FFFFFF;
+            --background: #0d1b2a;
+            --card: #1b263b;
+            --text: #0000FF;#FFFFFF;
+            --accent: #64b5f6;
+        }
+        body {
+            margin: 0;
+            background: var(--background);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text);
+        }
+        header {
+            background: var(--primary);
+            padding: 18px 0;
+            text-align: center;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: #fff;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.09);
+        }
+        .anime-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 8px;
+        }
+        .anime-card {
+            background: var(--card);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+            margin: 10px;
+            width: 150px;
+            transition: transform 0.2s;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .anime-card:hover {
+            transform: scale(1.04);
+            box-shadow: 0 4px 12px var(--accent);
+        }
+        .anime-thumb img {
+            width: 100%;
+            display: block;
+        }
+        .anime-info {
+            padding: 12px 8px 10px 8px;
+            text-align: center;
+        }
+        .anime-info h3 {
+            margin: 6px 0 2px 0;
+            font-size: 1.05rem;
+            color: var(--accent);
+        }
+        .assistir-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 6px 18px;
+            margin-top: 7px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .assistir-btn:hover {
+            background: var(--secondary);
+        }
+        .player-bg {
+            background: var(--secondary);
+            padding: 16px 0;
+            display: flex;
+            justify-content: center;
+        }
+        .player-bg iframe {
+            width: 95vw;
+            max-width: 480px;
+            aspect-ratio: 16/9;
+            border: none;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        DragonAnimes
+    </header>
+    <div class="anime-list" id="animeList"></div>
+    <div class="player-bg" id="player" style="display:none;"></div>
+
+    <script>
+        // Lista de animes
+        const animes = [
+            {
+                nome: "Naruto",
+                imagem: "https://upload.wikimedia.org/wikipedia/pt/9/94/Naruto_capa.png",
+                video: "https://www.youtube.com/embed/JWZ4wLKLj5A"
+            },
+            {
+                nome: "Black Clover",
+                imagem: "https://i.ibb.co/6cNP3P5w/images-4.jpg",
+                video: "https://www.youtube.com/embed/MCfkZ4pQK9c"
+            },
+            {
+                nome: "Dragon Ball",
+                imagem: "https://upload.wikimedia.org/wikipedia/pt/2/2e/Dragon_Ball_anime.png",
+                video: "https://www.youtube.com/embed/SiMHTK15Pik"
+            }
+        ];
+
+        function mostrarAnimes() {
+            const animeList = document.getElementById('animeList');
+            animeList.innerHTML = "";
+            animes.forEach((anime, i) => {
+                const card = document.createElement('div');
+                card.className = 'anime-card';
+                card.innerHTML = `
+                    <div class="anime-thumb">
+                        <img src="${anime.imagem}" alt="${anime.nome}">
+                    </div>
+                    <div class="anime-info">
+                        <h3>${anime.nome}</h3>
+                        <button class="assistir-btn" onclick="assistirAnime(${i})">Assistir</button>
+                    </div>
+                `;
+                animeList.appendChild(card);
+            });
+        }
+
+        function assistirAnime(i) {
+            const player = document.getElementById('player');
+            player.style.display = 'flex';
+            player.innerHTML = `
+                <iframe src="${animes[i].video}" allowfullscreen></iframe>
+            `;
+            window.scrollTo({top: player.offsetTop, behavior: "smooth"});
+        }
+
+        mostrarAnimes();
+    </script>
+</body>
+</html>
